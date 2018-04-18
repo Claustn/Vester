@@ -12,7 +12,7 @@ Describe -Name 'Invoke-Vester unit tests' -Tag 'unit' {
     Context 'Structure' {
         # Hard-coded parameter names here
         # By design, this array requires updating if function params change
-        $Parameters = @('Config','Test','Remediate','XMLOutputFile')
+        $Parameters = @('Config','Test','Remediate','XMLOutputFile','Passthru')
 
         $Command = Get-Command Invoke-Vester
         $Help = Get-Help Invoke-Vester

@@ -20,7 +20,7 @@ Describe 'Unit Tests' -Tag 'unit' {
             }
 
             # Use RegEx to help capture the line that defines the test's $cfg.abc.xyz value
-            $CfgLine = ($Test | Select-String '\$cfg') -replace '.*\:[0-9]+\:',''
+            $CfgLine = ($Test | Select-String '\$Desired\s+=\s+\$cfg') -replace '.*\:[0-9]+\:',''
             # $cfg values and test files maintain a 1:1 ratio
             $CfgLine.Count | Should Be 1
 
@@ -40,7 +40,7 @@ Describe 'Unit Tests' -Tag 'unit' {
                 'bool'   {$true}
                 'int'    {1}
                 'string' {'test'}
-                'object' {@('1','2')}
+                'object' {@('1','2')}                
             }
 
             # Still using the -match results, set this test's $cfg.abc.xyz
@@ -49,6 +49,16 @@ Describe 'Unit Tests' -Tag 'unit' {
             # Dot sourcing loads the four expected variables
             . $Test.FullName
 
+            $CfgType = switch ($Type) {
+                'string[]' {@('test','test2')}
+                'bool'   {$true}
+                'int'    {1}
+                'string' {'test'}
+                'object' {@('1','2')}
+                
+            }
+            Write-Host $CfgValue2
+
             It "$TestBaseName loads expected variables" {
                 $Title   | Should Not BeNullOrEmpty
                 $Desired | Should Not BeNullOrEmpty
@@ -56,9 +66,10 @@ Describe 'Unit Tests' -Tag 'unit' {
                 $Fix     | Should Not BeNullOrEmpty
             }
 
+            if ($Type -eq 'String[]') {$Type = 'System.Object[]'}
             It "$TestBaseName variables have proper types" {
                 $Title   | Should BeOfType String
-                $Desired | Should BeOfType $Type
+                ,$CfgType | Should BeOfType $Type 
                 $Actual  | Should BeOfType ScriptBlock
                 $Fix     | Should BeOfType ScriptBlock
             }

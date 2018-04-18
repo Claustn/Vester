@@ -84,7 +84,7 @@
             Else {Test-Path $_}
         })]
         [Alias('FullName')]
-        [object[]]$Config = "$(Split-Path -Parent $PSScriptRoot)\Configs\Config.json",
+        [object[]]$Config = "$(Split-Path -Parent $PSScriptRoot)/Configs/Config.json",
 
         # Optionally define the file/folder of test file(s) to call
         # Defaults to \Vester\Tests\, grabbing all tests recursively
@@ -154,7 +154,7 @@
             #Build Pester Parameter Hashtable to splat
             $Pester_Params = @{
                 Script = @{
-                    Path = "$(Split-Path -Parent $PSScriptRoot)\Private\Template\VesterTemplate.Tests.ps1"
+                    Path = "$(Split-Path -Parent $PSScriptRoot)/Private/Template/VesterTemplate.Tests.ps1"
                     Parameters = @{
                         Cfg       = $cfg
                         TestFiles = $Test

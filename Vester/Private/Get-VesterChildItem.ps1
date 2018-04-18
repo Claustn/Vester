@@ -17,27 +17,27 @@ function Get-VesterChildItem {
         $Name | ForEach-Object {
             Get-ChildItem -Path $Path -Filter "$_.Vester.ps1" -File -Recurse |
                 Select-Object @{n='Name';e={($_.BaseName -split '\.')[0]}},
-                                @{n='Scope';e={($_.Directory -split '\\')[-1]}},
+                                @{n='Scope';e={($_.Directory -split '\\|/')[-1]}},
                                 FullName |
                 Where-Object Scope -in $Scope
         }
     } ElseIf ($Scope) {
         Get-ChildItem -Path $Path -Filter '*.Vester.ps1' -File -Recurse |
             Select-Object @{n='Name';e={($_.BaseName -split '\.')[0]}},
-                            @{n='Scope';e={($_.Directory -split '\\')[-1]}},
+                            @{n='Scope';e={($_.Directory -split '\\|/')[-1]}},
                             FullName |
             Where-Object Scope -in $Scope
     } ElseIf ($Name) {
         $Name | ForEach-Object {
             Get-ChildItem -Path $Path -Filter "$_.Vester.ps1" -File -Recurse |
                 Select-Object @{n='Name';e={($_.BaseName -split '\.')[0]}},
-                                @{n='Scope';e={($_.Directory -split '\\')[-1]}},
+                                @{n='Scope';e={($_.Directory -split '\\|/')[-1]}},
                                 FullName
         }
     } Else {
         Get-ChildItem -Path $Path -Filter '*.Vester.ps1' -File -Recurse |
             Select-Object @{n='Name';e={($_.BaseName -split '\.')[0]}},
-                            @{n='Scope';e={($_.Directory -split '\\')[-1]}},
+                            @{n='Scope';e={($_.Directory -split '\\|/')[-1]}},
                             FullName
     }
 }

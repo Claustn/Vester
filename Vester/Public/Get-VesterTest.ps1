@@ -81,7 +81,7 @@
             If ($_.FullName) {Test-Path $_.FullName}
             Else {Test-Path $_}
         })]
-        [object[]]$Path = "$(Split-Path -Parent $PSScriptRoot)\Tests\",
+        [object[]]$Path = "$(Split-Path -Parent $PSScriptRoot)/Tests/",
 
         # Return only test files belonging to the specified Vester scope(s).
         # Vester determines test file scope by the name of its parent directory.

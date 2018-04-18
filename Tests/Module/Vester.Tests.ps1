@@ -34,8 +34,8 @@ Describe 'Check module files for breaking changes' {
             $manifest.Copyright | Should BeExactly 'Apache License'
             $manifest.Description | Should BeOfType String
             $manifest.PowerShellVersion | Should Be '3.0'
-            $manifest.RequiredModules.Name | Should BeExactly @('Pester','VMware.VimAutomation.Core')
-            $manifest.RequiredModules.Version | Should BeExactly @('3.4.3','6.5.1')
+            $manifest.RequiredModules.Name | Should BeExactly @('Pester','VMware.VimAutomation.Core','VMware.VumAutomation')
+            $manifest.RequiredModules.Version | Should BeExactly @('3.4.3','6.5.1','6.5.1')
             $manifest.ExportedFunctions.Values.Name | Should BeExactly $PublicFiles.BaseName
 
             $manifest.PrivateData.PSData.Tags | Should BeExactly @('vester','vmware','vcenter','vsphere','esxi','powercli')
@@ -69,7 +69,7 @@ Describe 'Check module files for breaking changes' {
                 Read-HostColor | Should BeExactly 'rh-Test'
 
                 # Ensure that Write-Host & Read-Host were actually called within Read-HostColor
-                Assert-VerifiableMocks
+                Assert-VerifiableMock
             }
 
             # (Any additional private functions as It tests here)

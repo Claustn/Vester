@@ -54,7 +54,7 @@ function New-VesterConfig {
     param (
         # Select a folder to create a new Config.json file inside
         [ValidateScript({Test-Path $_ -PathType Container})]
-        [object]$OutputFolder = "$(Split-Path -Parent $PSScriptRoot)\Configs",
+        [object]$OutputFolder = "$(Split-Path -Parent $PSScriptRoot)/Configs",
 
         # Suppress all prompts and Write-Host. Create the config file
         # with the values of the first Cluster/Host/VM/etc. found.
@@ -75,8 +75,8 @@ function New-VesterConfig {
     Write-Verbose "vCenter: $($DefaultVIServers.Name)"
 
     # TODO: Make this a param? Or keep hardcoded?
-    Write-Verbose "Assembling Vester files within $(Split-Path -Parent $PSScriptRoot)\Tests\"
-    $GetVesterTest = "$(Split-Path -Parent $PSScriptRoot)\Tests\" | Get-VesterTest -Simple
+    Write-Verbose "Assembling Vester files within $(Split-Path -Parent $PSScriptRoot)/Tests/"
+    $GetVesterTest = "$(Split-Path -Parent $PSScriptRoot)/Tests/" | Get-VesterTest -Simple
     # Appending to a list is faster than rebuilding an array
     $VesterTestSuite = New-Object 'System.Collections.Generic.List[PSCustomObject]'
 
@@ -288,14 +288,14 @@ function New-VesterConfig {
         } #if $config.$Scope
     } #foreach $Scope
 
-    Write-Verbose "Creating config file at $OutputFolder\Config.json"
+    Write-Verbose "Creating config file at $OutputFolder/Config.json"
     Try {
-        $config | ConvertTo-Json -depth 5 | Out-File $OutputFolder\Config.json -ErrorAction Stop
+        $config | ConvertTo-Json -depth 5 | Out-File $OutputFolder/Config.json -ErrorAction Stop
         Write-Host "`nConfig file created at " -ForegroundColor Green -NoNewline
-        Write-Host "$OutputFolder\Config.json"
+        Write-Host "$OutputFolder/Config.json"
         Write-Host 'Edit the file manually to change any displayed values.'
     } Catch {
-        Write-Warning "`nFailed to create config file at $OutputFolder\Config.json"
+        Write-Warning "`nFailed to create config file at $OutputFolder/Config.json"
         Write-Warning 'Have you tried running PowerShell as an administrator?'
     }
 }
